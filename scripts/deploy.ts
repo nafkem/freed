@@ -1,15 +1,14 @@
 import { ethers } from "hardhat";
 
 async function main() {
-    
-  const MyToken = await ethers.deployContract("MyToken"); 
-  await MyToken.waitForDeployment();
+  // const Token = await ethers.getContractFactory("CVIII");
+  // const token = await Token.deploy("web3Bridge", "VIII");
+  // await token.deployed();
+  const MyERC721 = await ethers.deployContract("MyERC721",["NAFK","NAF","QmXgLtjVRLaoXcoJ1b2mgzddLGyPdPTGChshUWBcMvMk45"]); 
+  await MyERC721.waitForDeployment();
   
-  const SaveERC20 = await ethers.deployContract("SaveERC20",[MyToken.target]); 
-  await SaveERC20.waitForDeployment();
-
   console.log(
-    `SaveERC20 contract deployed to ${SaveERC20.target, MyToken.target}`
+    `MyERC721 contract deployed to ${MyERC721.target}`
   );
 }
 

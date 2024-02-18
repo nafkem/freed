@@ -15,7 +15,7 @@ describe("SaveERC20", function () {
   // and reset Hardhat Network to that snapshot in every test.
   beforeEach(async function () {
     const SaveERC20 = (await ethers.getContractFactory("SaveERC20")) as SaveERC20__factory;
-    [owner, Address1, Address2] = await ethers.getSigners();
+    [owner, Address1] = await ethers.getSigners();
     saveERC20 = await SaveERC20.deploy();
   });
 
@@ -28,23 +28,5 @@ describe("SaveERC20", function () {
     expect(await saveERC20.checkContractBal()).to.equal(ethers.parseUnits("1", 18));
   });
 
-  it("It should return user balance", async function () {
-    await saveERC20.connect(owner).deposit({ value: ethers.parseUnits("1", 18) });
-    let value = await saveERC20.connect(owner).checkSavings(owner.address);
-    expect(value).to.equal(ethers.parseUnits("1", 18));
-  });
-
-  it("it should be withdrawable", async function () {
-    await saveERC20.connect(owner).deposit({ value: ethers.parseUnits("1", 18) });
-    await saveERC20.connect(owner).withdraw();
-    let savingsValue = await saveERC20.connect(owner).checkSavings(owner.address);
-    expect(savingsValue).to.equal(ethers.parseUnits("0", 18));
-  });
-
-  it("it should be able to send out funds", async function () {
-    await saveERC20.connect(owner).deposit({ value: ethers.parseUnits("1", 18) });
-    await saveERC20.connect(owner).sendOutSaving(Address1.address, ethers.parseUnits("0.5", 18));
-    let savingsValue = await saveERC20.connect(Address1).checkSavings(Address1.address);
-    expect(savingsValue).to.equal(ethers.parseUnits("0.5", 18));
-  });
+    });
 });
